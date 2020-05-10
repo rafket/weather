@@ -45,6 +45,7 @@ def getWeatherFindU(lat, lon):
     df['invdist'] = 1/df['distance'].astype(float)
     df['temp'] = df['temp'].astype(float)
     df['rain'] = df['rain*'].astype(float)
+    df['rain 24h'] = df['rain 24h'].astype(float)
     df['humidity'] = df['humidity'].astype(float)
 
     temp = sum((df['temp'] * df['invdist'] / sum(df['invdist'])).dropna())
@@ -52,7 +53,9 @@ def getWeatherFindU(lat, lon):
     humidity = sum((df['humidity'] * df['invdist'] / sum(df['invdist'])).dropna())
     rain = sum((df['rain'] * df['invdist'] / sum(df['invdist'])).dropna())
     rain = rain * 2.54
+    rain24h = sum((df['rain 24h'] * df['invdist'] / sum(df['invdist'])).dropna())
+    rain24h = rain24h * 2.54
 
-    return "{:.1f}°C, humidity: {:.0f}%, rain 1hr: {:.0f}cm".format(temp, humidity, rain)
+    return "{:.1f}°C, humidity: {:.0f}%, rain 1hr: {:.1f}cm, rain 24hr: {:.1f}cm".format(temp, humidity, rain, rain24h)
 
 print(getWeather(*getLocation()))
