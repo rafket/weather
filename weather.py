@@ -29,7 +29,7 @@ def getLocation():
 def getWeather(lat, lon):
     r = requests.get("https://api.weather.gov/points/{},{}".format(lat, lon), headers={'User-Agent': useragent})
     if 'properties' not in r.json():
-        return getWeatherFindU(lon, lat)
+        return getWeatherFindU(lat, lon)
     forecastURL = r.json()['properties']['forecastHourly']
     r = requests.get(forecastURL+'?units=si', headers={'User-Agent': useragent})
     forecast = r.json()['properties']['periods']
